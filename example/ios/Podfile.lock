@@ -1,0 +1,58 @@
+PODS:
+  - AgoraInfra_iOS (1.2.13)
+  - chat_uikit_keyboard_panel (0.0.1):
+    - Flutter
+  - chatroom_uikit (0.0.1):
+    - Flutter
+  - Flutter (1.0.0)
+  - flutter_localization (0.0.1):
+    - Flutter
+  - HyphenateChat (4.13.0):
+    - AgoraInfra_iOS (= 1.2.13)
+  - im_flutter_sdk_ios (0.0.1):
+    - Flutter
+    - HyphenateChat (= 4.13.0)
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+
+DEPENDENCIES:
+  - chat_uikit_keyboard_panel (from `.symlinks/plugins/chat_uikit_keyboard_panel/ios`)
+  - chatroom_uikit (from `.symlinks/plugins/chatroom_uikit/ios`)
+  - Flutter (from `Flutter`)
+  - flutter_localization (from `.symlinks/plugins/flutter_localization/ios`)
+  - im_flutter_sdk_ios (from `.symlinks/plugins/im_flutter_sdk_ios/ios`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+
+SPEC REPOS:
+  trunk:
+    - AgoraInfra_iOS
+    - HyphenateChat
+
+EXTERNAL SOURCES:
+  chat_uikit_keyboard_panel:
+    :path: ".symlinks/plugins/chat_uikit_keyboard_panel/ios"
+  chatroom_uikit:
+    :path: ".symlinks/plugins/chatroom_uikit/ios"
+  Flutter:
+    :path: Flutter
+  flutter_localization:
+    :path: ".symlinks/plugins/flutter_localization/ios"
+  im_flutter_sdk_ios:
+    :path: ".symlinks/plugins/im_flutter_sdk_ios/ios"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+
+SPEC CHECKSUMS:
+  AgoraInfra_iOS: 65e11a2183ab7836258768868d06058c22701b13
+  chat_uikit_keyboard_panel: 67cdf0084a828cc82c53c7065b54d92b9fc8951e
+  chatroom_uikit: 7d94e7975467119b18e0c0cb50b8643e569a95be
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_localization: f43b18844a2b3d2c71fd64f04ffd6b1e64dd54d4
+  HyphenateChat: c2ecd32ae5328c027d8e270bdbe63c0902cfc828
+  im_flutter_sdk_ios: 989968246d61b7472044cd19c93ff2bb70194a10
+  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
+
+PODFILE CHECKSUM: 4305caec6b40dde0ae97be1573c53de1882a07e5
+
+COCOAPODS: 1.15.2

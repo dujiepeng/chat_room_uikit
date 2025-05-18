@@ -1,0 +1,33 @@
+import 'package:chatroom_uikit/src/utils/chat_room_enum.dart';
+
+class ChatRoomUIKitSettings {
+  /// Default display avatar
+  static String? userDefaultAvatar;
+
+  /// Whether to display time in the message list
+  static bool enableMsgListTime = true;
+
+  /// Whether to display identity in the message list
+  static bool enableMsgListIdentify = true;
+
+  /// Whether to display avatar in the message list
+  static bool enableMsgListAvatar = true;
+
+  /// Whether to display nickname in the message list
+  static bool enableMsgListNickname = true;
+
+  /// Default identity icon
+  static String? defaultIdentify;
+
+  /// Default gift icon
+  static String? defaultGiftIcon;
+
+  /// Default gift price icon
+  static String? defaultGiftPriceIcon;
+
+  /// Avatar corner radius
+  static CornerRadius avatarRadius = CornerRadius.large;
+
+  /// Input component corner radius
+  static CornerRadius inputBarRadius = CornerRadius.large;
+}
