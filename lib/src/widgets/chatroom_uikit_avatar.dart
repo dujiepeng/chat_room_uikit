@@ -1,7 +1,7 @@
 import 'package:chat_uikit_provider/chat_uikit_provider.dart';
 import 'package:chatroom_uikit/chatroom_uikit_settings.dart';
 import 'package:chatroom_uikit/src/utils/chat_room_enum.dart';
-import 'package:chatroom_uikit/src/utils/image_loader.dart';
+import 'package:chatroom_uikit/src/utils/chatroom_image_loader.dart';
 
 import 'package:flutter/material.dart';
 

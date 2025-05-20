@@ -1,4 +1,4 @@
-import 'package:chatroom_uikit/src/utils/image_loader.dart';
+import 'package:chatroom_uikit/src/utils/chatroom_image_loader.dart';
 import 'package:chatroom_uikit/src/widgets/chatroom_emoji.dart';
 import 'package:flutter/material.dart';
 

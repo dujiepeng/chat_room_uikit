@@ -102,4 +102,14 @@ extension ChatRoomMessage on Message {
     msg.addUserInfo(roomId);
     return msg;
   }
+
+  static Message joinedMessage(String roomId) {
+    Message msg = Message.createCustomSendMessage(
+      targetId: roomId,
+      event: ChatRoomUIKitKey.userJoinEvent,
+      chatType: ChatType.ChatRoom,
+    );
+    msg.addUserInfo(roomId);
+    return msg;
+  }
 }

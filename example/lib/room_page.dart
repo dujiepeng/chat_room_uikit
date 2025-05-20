@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:chatroom_uikit/chatroom_uikit.dart';
+import 'package:chatroom_uikit_example/user_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -39,12 +40,53 @@ class _RoomPageState extends State<RoomPage> {
           IconButton(
             onPressed: () {
               ChatRoomUIKit.instance.sendMessage(
+                message: ChatRoomMessage.giftMessage(
+                  widget.roomId,
+                  ChatRoomGift(
+                    giftId: 'giftId',
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(Icons.message_outlined),
+          ),
+          IconButton(
+            onPressed: () {
+              ChatRoomUIKit.instance.sendMessage(
                   message: ChatRoomMessage.roomMessage(
                 widget.roomId,
                 'test',
               ));
             },
             icon: const Icon(Icons.message),
+          ),
+          IconButton(
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                clipBehavior: Clip.hardEdge,
+                isScrollControlled: true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16.0),
+                    topRight: Radius.circular(16.0),
+                  ),
+                ),
+                builder: (ctx) {
+                  return ChatRoomUIKitMembersView(
+                    roomId: widget.roomId,
+                    ownerId: 'du001',
+                    controllers: [
+                      ChatRoomUIKitMembersController(
+                        '成员列表',
+                      ),
+                      ChatRoomUIKitMutesController('禁言列表')
+                    ],
+                  );
+                },
+              );
+            },
+            icon: const Icon(Icons.card_membership),
           ),
         ],
       ),
@@ -106,56 +148,55 @@ class _RoomPageState extends State<RoomPage> {
                   InkWell(
                     onTap: () {
                       showModalBottomSheet(
-                          context: context,
-                          clipBehavior: Clip.hardEdge,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(16.0),
-                              topRight: Radius.circular(16.0),
-                            ),
+                        context: context,
+                        clipBehavior: Clip.hardEdge,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(16.0),
+                            topRight: Radius.circular(16.0),
                           ),
-                          builder: (ctx) {
-                            return FutureBuilder(
-                              future: rootBundle.loadString('data/Gifts.json'),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  Map<String, dynamic> map =
-                                      json.decode(snapshot.data!);
-                                  List<ChatroomGiftPageController> controllers =
-                                      [];
-                                  for (var element in map.keys.toList()) {
-                                    final controller =
-                                        ChatroomGiftPageController(
-                                            title: element,
-                                            gifts: () {
-                                              List<ChatRoomGift> list = [];
-                                              map[element].forEach((element) {
-                                                ChatRoomGift gift =
-                                                    ChatRoomGift.fromJson(
-                                                        element);
-                                                list.add(gift);
-                                              });
-                                              return list;
-                                            }());
-                                    controllers.add(controller);
-                                  }
-                                  return ChatRoomGiftsView(
-                                    giftControllers: controllers,
-                                    onSendTap: (gift) {
-                                      ChatRoomUIKit.instance.sendMessage(
-                                        message: ChatRoomMessage.giftMessage(
-                                          widget.roomId,
-                                          gift,
-                                        ),
-                                      );
-                                    },
-                                  );
-                                } else {
-                                  return Container();
+                        ),
+                        builder: (ctx) {
+                          return FutureBuilder(
+                            future: rootBundle.loadString('data/Gifts.json'),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                Map<String, dynamic> map =
+                                    json.decode(snapshot.data!);
+                                List<ChatroomGiftPageController> controllers =
+                                    [];
+                                for (var element in map.keys.toList()) {
+                                  final controller = ChatroomGiftPageController(
+                                      title: element,
+                                      gifts: () {
+                                        List<ChatRoomGift> list = [];
+                                        map[element].forEach((element) {
+                                          ChatRoomGift gift =
+                                              ChatRoomGift.fromJson(element);
+                                          list.add(gift);
+                                        });
+                                        return list;
+                                      }());
+                                  controllers.add(controller);
                                 }
-                              },
-                            );
-                          });
+                                return ChatRoomGiftsView(
+                                  giftControllers: controllers,
+                                  onSendTap: (gift) {
+                                    ChatRoomUIKit.instance.sendMessage(
+                                      message: ChatRoomMessage.giftMessage(
+                                        widget.roomId,
+                                        gift,
+                                      ),
+                                    );
+                                  },
+                                );
+                              } else {
+                                return Container();
+                              }
+                            },
+                          );
+                        },
+                      );
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(3),
@@ -180,6 +221,8 @@ class _RoomPageState extends State<RoomPage> {
       },
       child: content,
     );
+
+    content = DemoCustomData(child: content);
 
     return content;
   }

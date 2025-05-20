@@ -1,6 +1,6 @@
 import 'package:chat_sdk_service/chat_sdk_service.dart';
 import 'package:chat_uikit_theme/chat_uikit_theme.dart';
-import 'package:chatroom_uikit/src/chatroom_uikit_service.dart';
+import 'package:chatroom_uikit/src/chatroom_uikit_service/chatroom_uikit_service.dart';
 import 'package:chatroom_uikit/src/widgets/chatroom_message_list_item.dart';
 import 'package:flutter/material.dart';
 
@@ -97,6 +97,7 @@ class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView>
     setState(() {
       this.messages.addAll(localMsgs);
     });
+    moveToBottom();
   }
 
   @override
@@ -116,9 +117,22 @@ class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView>
 
   @override
   void onMessageSendSuccess(String msgId, Message msg) {
-    if (msg.conversationId == widget.roomId && !msg.isBroadcast) {
-      messages.add(msg);
-      setState(() {});
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (msg.conversationId == widget.roomId && !msg.isBroadcast) {
+        messages.add(msg);
+        setState(() {
+          moveToBottom();
+        });
+      }
+    });
+  }
+
+  void moveToBottom() {
+    if (scrollController.hasClients) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        scrollController.animateTo(scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+      });
     }
   }
 
@@ -127,5 +141,8 @@ class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView>
     String roomId,
     String participant,
     String? ext,
-  ) {}
+  ) {
+    debugPrint(
+        'onMemberJoinedFromChatRoom roomId: $roomId, participant: $participant, ext: $ext');
+  }
 }

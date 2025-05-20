@@ -1,8 +1,9 @@
 import 'package:chat_sdk_service/chat_sdk_service.dart';
 import 'package:chat_sdk_context/chat_sdk_context.dart';
+import 'package:chatroom_uikit/src/chatroom_uikit_service/actions/chatroom_uikit_room_actions.dart';
 import 'package:flutter/material.dart';
 
-class ChatRoomUIKit extends ChatSDKService {
+class ChatRoomUIKit extends ChatSDKService with ChatRoomUIKitRoomActions {
   static ChatRoomUIKit get instance {
     WidgetsFlutterBinding.ensureInitialized();
     return _instance ??= ChatRoomUIKit();

@@ -19,6 +19,9 @@ class ChatRoomUIKitSettings {
   /// Default identity icon
   static String? defaultIdentify;
 
+// Whether identities are displayed on the participant list.
+  static bool enableParticipantItemIdentify = false;
+
   /// Default gift icon
   static String? defaultGiftIcon;
 

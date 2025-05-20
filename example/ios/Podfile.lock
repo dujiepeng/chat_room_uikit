@@ -1,7 +1,5 @@
 PODS:
   - AgoraInfra_iOS (1.2.13)
-  - chat_uikit_keyboard_panel (0.0.1):
-    - Flutter
   - chatroom_uikit (0.0.1):
     - Flutter
   - Flutter (1.0.0)
@@ -17,7 +15,6 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
-  - chat_uikit_keyboard_panel (from `.symlinks/plugins/chat_uikit_keyboard_panel/ios`)
   - chatroom_uikit (from `.symlinks/plugins/chatroom_uikit/ios`)
   - Flutter (from `Flutter`)
   - flutter_localization (from `.symlinks/plugins/flutter_localization/ios`)
@@ -30,8 +27,6 @@ SPEC REPOS:
     - HyphenateChat
 
 EXTERNAL SOURCES:
-  chat_uikit_keyboard_panel:
-    :path: ".symlinks/plugins/chat_uikit_keyboard_panel/ios"
   chatroom_uikit:
     :path: ".symlinks/plugins/chatroom_uikit/ios"
   Flutter:
@@ -45,7 +40,6 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AgoraInfra_iOS: 65e11a2183ab7836258768868d06058c22701b13
-  chat_uikit_keyboard_panel: 67cdf0084a828cc82c53c7065b54d92b9fc8951e
   chatroom_uikit: 7d94e7975467119b18e0c0cb50b8643e569a95be
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_localization: f43b18844a2b3d2c71fd64f04ffd6b1e64dd54d4

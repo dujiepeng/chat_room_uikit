@@ -1,5 +1,5 @@
 import 'package:chatroom_uikit/chatroom_uikit.dart';
-import 'package:chatroom_uikit/src/utils/image_loader.dart';
+import 'package:chatroom_uikit/src/utils/chatroom_image_loader.dart';
 import 'package:chatroom_uikit/src/widgets/chat_bottom_sheet_background.dart';
 import 'package:chatroom_uikit/src/widgets/custom_tab_indicator.dart';
 import 'package:flutter/material.dart';
@@ -247,7 +247,7 @@ class ChatRoomGiftItem extends StatelessWidget {
             child: Center(
               child: Text(
                 // TODO: 国际化
-                'ChatroomLocal.sent.getString(context)',
+                '发送',
                 style: TextStyle(
                   fontWeight: theme.font.labelMedium.fontWeight,
                   fontSize: theme.font.labelMedium.fontSize,

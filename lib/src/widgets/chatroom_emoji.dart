@@ -1,5 +1,5 @@
 import 'package:chat_uikit_theme/chat_uikit_theme.dart';
-import 'package:chatroom_uikit/src/utils/image_loader.dart';
+import 'package:chatroom_uikit/src/utils/chatroom_image_loader.dart';
 import 'package:flutter/material.dart';
 
 typedef EmojiClick = void Function(String emoji);

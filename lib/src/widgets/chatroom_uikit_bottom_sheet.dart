@@ -1,8 +1,8 @@
 import 'package:chat_uikit_theme/theme.dart';
 import 'package:flutter/material.dart';
 
-class ChatRoomUIKitBottomSheetWidget extends StatelessWidget {
-  const ChatRoomUIKitBottomSheetWidget({
+class ChatRoomUIKitBottomSheet extends StatelessWidget {
+  const ChatRoomUIKitBottomSheet({
     required this.items,
     this.title,
     this.titleStyle,

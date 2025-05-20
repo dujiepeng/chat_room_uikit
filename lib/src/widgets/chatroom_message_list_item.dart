@@ -2,7 +2,7 @@ import 'package:chat_uikit_provider/chat_uikit_provider.dart';
 import 'package:chat_uikit_theme/chat_uikit_theme.dart';
 import 'package:chatroom_uikit/chatroom_uikit_settings.dart';
 import 'package:chatroom_uikit/src/models/chat_room_uikit_gift.dart';
-import 'package:chatroom_uikit/src/utils/image_loader.dart';
+import 'package:chatroom_uikit/src/utils/chatroom_image_loader.dart';
 import 'package:chatroom_uikit/src/utils/message_extension.dart';
 import 'package:chatroom_uikit/src/utils/time_tool.dart';
 import 'package:chatroom_uikit/src/widgets/chatroom_uikit_avatar.dart';
@@ -156,7 +156,7 @@ class _ChatRoomUserJoinListItemState extends State<ChatRoomUserJoinListItem>
       widget.msg,
       // TODO: 国际化
       child: TextSpan(
-          text: " 加入",
+          text: " 加入聊天室",
           style: TextStyle(
             color: theme.color.isDark
                 ? theme.color.secondaryColor7
@@ -187,7 +187,7 @@ class _ChatRoomGiftListItemState extends State<ChatRoomGiftListItem>
         children: [
           const WidgetSpan(child: Padding(padding: EdgeInsets.only(left: 4))),
           // TODO 礼物名称国际化
-          const TextSpan(text: '礼物'),
+          TextSpan(text: gift!.giftName ?? '礼物'),
           WidgetSpan(
             child: Container(
               clipBehavior: Clip.hardEdge,
@@ -198,7 +198,7 @@ class _ChatRoomGiftListItemState extends State<ChatRoomGiftListItem>
               height: 18,
               margin: const EdgeInsets.only(left: 4),
               child: ChatRoomImageLoader.networkImage(
-                image: gift!.giftIcon,
+                image: gift.giftIcon,
                 size: 18,
                 placeholderWidget:
                     (ChatRoomUIKitSettings.defaultGiftIcon == null)

@@ -16,17 +16,31 @@ class _RoomsListViewState extends State<RoomsListView> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      PageResult<ChatRoom> page =
-          await ChatRoomUIKit.instance.fetchPublicChatRoomsFromServer();
-      setState(() {
-        rooms = page.data;
-      });
+      load();
+    });
+  }
+
+  void load() async {
+    PageResult<ChatRoom> page =
+        await ChatRoomUIKit.instance.fetchPublicChatRoomsFromServer();
+    setState(() {
+      rooms = page.data;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Chat Rooms'),
+        leading: const SizedBox(),
+        actions: [
+          IconButton(
+            onPressed: load,
+            icon: const Icon(Icons.cabin),
+          ),
+        ],
+      ),
       body: ListView.separated(
         itemBuilder: (ctx, index) {
           debugPrint(rooms[index].roomId);

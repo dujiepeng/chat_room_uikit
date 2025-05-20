@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:chatroom_uikit/chatroom_uikit.dart';
-import 'package:chatroom_uikit/src/utils/image_loader.dart';
+import 'package:chatroom_uikit/src/utils/chatroom_image_loader.dart';
 import 'package:chatroom_uikit/src/widgets/chatroom_uikit_avatar.dart';
 
 import 'package:flutter/material.dart';
@@ -333,7 +333,7 @@ class GiftItem extends StatelessWidget {
               flex: 0,
               child: Text(
                 // TODO 国际化
-                '礼物',
+                gift.giftName ?? '礼物',
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontWeight: theme.font.bodyExtraSmall.fontWeight,
