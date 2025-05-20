@@ -283,7 +283,9 @@ class _ChatRoomMemberListViewState extends State<ChatRoomMemberListView>
         ChatUIKitProvider.instance.getProfiles(temp, belongId: widget.roomId);
     members.removeWhere((element) => map.values.contains(element.id));
     members.addAll(map.values);
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   Future<void> reloadData() async {
@@ -294,7 +296,9 @@ class _ChatRoomMemberListViewState extends State<ChatRoomMemberListView>
         ChatUIKitProvider.instance.getProfiles(temp, belongId: widget.roomId);
     members.removeWhere((element) => map.values.contains(element.id));
     members.addAll(map.values);
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override

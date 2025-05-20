@@ -135,7 +135,7 @@ class ChatRoomInputBarState extends State<ChatRoomInputBar>
               padding: const EdgeInsets.only(right: 4, left: 4),
               child: Text(
                 // widget.inputHint ?? 'Let\'s chat',
-                widget.inputHint ?? '国际化',
+                widget.inputHint ?? '发点什么吧~',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(

@@ -11,5 +11,4 @@ export 'chatroom_uikit_settings.dart';
 export 'src/utils/message_extension.dart';
 export 'src/models/chat_room_uikit_gift.dart';
 export 'src/views/chatroom_gifts_view.dart';
-export 'src/views/participant_page_list_service.dart';
 export 'src/views/chatroom_members_view.dart';

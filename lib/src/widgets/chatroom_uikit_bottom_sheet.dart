@@ -126,8 +126,8 @@ class ChatRoomUIKitBottomSheet extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 17),
           alignment: Alignment.center,
           child: Text(
-            // TODO: ChatroomLocal.bottomSheetCancel.getString(context),
-            'Cancel',
+            // TODO 国际化
+            '取消',
             style: cancelStyle ??
                 TextStyle(
                   fontWeight: theme.font.titleMedium.fontWeight,
