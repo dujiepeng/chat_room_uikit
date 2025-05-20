@@ -7,7 +7,7 @@ void main() {
   ChatRoomUIKit.instance
       .init(
     options: Options.withAppKey(
-      'easemob#chatroom-uikit',
+      'easemob#easeim',
       autoLogin: false,
     ),
   )

@@ -9,15 +9,33 @@ class RoomsListView extends StatefulWidget {
   State<RoomsListView> createState() => _RoomsListViewState();
 }
 
-class _RoomsListViewState extends State<RoomsListView> {
+class _RoomsListViewState extends State<RoomsListView>
+    with ChatSDKEventsObserver {
   List<ChatRoom> rooms = [];
 
   @override
   void initState() {
     super.initState();
+    ChatSDKService.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       load();
     });
+  }
+
+  @override
+  void dispose() {
+    ChatSDKService.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void onChatSDKEventBegin(ChatSDKEvent event) {
+    debugPrint('onChatSDKEventBegin: $event');
+  }
+
+  @override
+  void onChatSDKEventEnd(ChatSDKEvent event, ChatError? error) {
+    debugPrint('onChatSDKEventEnd: $event, error: $error');
   }
 
   void load() async {
@@ -43,7 +61,6 @@ class _RoomsListViewState extends State<RoomsListView> {
       ),
       body: ListView.separated(
         itemBuilder: (ctx, index) {
-          debugPrint(rooms[index].roomId);
           return ListTile(
             title: Text(rooms[index].name ?? rooms[index].roomId),
             onTap: () {

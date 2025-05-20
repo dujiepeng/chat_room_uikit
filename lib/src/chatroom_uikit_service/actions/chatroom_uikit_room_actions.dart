@@ -6,12 +6,19 @@ mixin ChatRoomUIKitRoomActions on ChatSDKService {
     required String roomId,
     bool leaveOther = true,
     String? ext,
-  }) {
-    super.joinChatRoom(roomId: roomId, leaveOther: leaveOther, ext: ext);
-    final message = ChatRoomMessage.joinedMessage(roomId);
-    Future.delayed(const Duration(milliseconds: 100), () {
-      ChatSDKService.instance.sendMessage(message: message);
-    });
-    return Future.value();
+  }) async {
+    try {
+      await super.joinChatRoom(
+        roomId: roomId,
+        leaveOther: leaveOther,
+        ext: ext,
+      );
+      final message = ChatRoomMessage.joinedMessage(roomId);
+      Future.delayed(const Duration(milliseconds: 100), () {
+        ChatSDKService.instance.sendMessage(message: message);
+      });
+    } catch (e) {
+      rethrow;
+    }
   }
 }

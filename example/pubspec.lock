@@ -19,14 +19,12 @@ packages:
     source: git
     version: "0.0.1"
   chat_sdk_service:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      path: "."
-      ref: main
-      resolved-ref: "160f23ce531058bd78c56dbbeebcd1c157ccee1b"
-      url: "https://github.com/dujiepeng/chat_sdk_service.git"
-    source: git
-    version: "4.13.0"
+      path: "../../chat_sdk_service"
+      relative: true
+    source: path
+    version: "4.13.0+1"
   chat_uikit_provider:
     dependency: transitive
     description:
@@ -50,7 +48,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.1.0"
+    version: "2.0.0"
   clock:
     dependency: transitive
     description:
