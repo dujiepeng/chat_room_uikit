@@ -161,7 +161,13 @@ class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView>
                 Flexible(
                   fit: FlexFit.loose,
                   child: Text(
-                    '$unreadCount 条新消息',
+                    () {
+                      if (unreadCount < 99) {
+                        return '$unreadCount 条新消息';
+                      } else {
+                        return '99+ 条新消息';
+                      }
+                    }(),
                     style: TextStyle(
                       height: 1.2,
                       fontWeight: theme.font.labelMedium.fontWeight,
@@ -242,8 +248,5 @@ class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView>
     String roomId,
     String participant,
     String? ext,
-  ) {
-    debugPrint(
-        'onMemberJoinedFromChatRoom roomId: $roomId, participant: $participant, ext: $ext');
-  }
+  ) {}
 }
