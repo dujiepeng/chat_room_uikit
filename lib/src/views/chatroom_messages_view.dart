@@ -1,9 +1,4 @@
-import 'package:chat_sdk_service/chat_sdk_service.dart';
-import 'package:chat_uikit_provider/chat_uikit_provider.dart';
-import 'package:chat_uikit_theme/chat_uikit_theme.dart';
 import 'package:chatroom_uikit/chatroom_uikit.dart';
-import 'package:chatroom_uikit/src/chatroom_uikit_service/chatroom_uikit_service.dart';
-import 'package:chatroom_uikit/src/widgets/chatroom_message_list_item.dart';
 import 'package:flutter/material.dart';
 
 class ChatRoomMessagesView extends StatefulWidget {
@@ -35,6 +30,8 @@ class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView>
   final List<Message> messages = [];
 
   final Map<String, ChatUIKitProfile> profileCache = {};
+  int unreadCount = 0;
+  ValueNotifier<bool> canMoveToBottom = ValueNotifier(true);
 
   @override
   void initState() {
@@ -103,7 +100,84 @@ class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView>
       },
     );
 
+    content = NotificationListener<ScrollNotification>(
+      onNotification: (notification) {
+        if (notification is ScrollUpdateNotification) {
+          canMoveToBottom.value = scrollController.position.pixels >=
+              scrollController.position.maxScrollExtent;
+          if (canMoveToBottom.value) {
+            unreadCount = 0;
+          }
+        }
+        return false;
+      },
+      child: content,
+    );
+
+    content = Stack(
+      children: [
+        content,
+        Positioned(
+          bottom: 0,
+          child: unreadCountWidget(),
+        )
+      ],
+    );
+
     return content;
+  }
+
+  Widget unreadCountWidget() {
+    return InkWell(
+      onTap: () {
+        unreadCount = 0;
+        moveToBottom();
+      },
+      child: ValueListenableBuilder(
+        valueListenable: canMoveToBottom,
+        builder: (context, value, child) {
+          if (value || unreadCount == 0) {
+            return const SizedBox.shrink();
+          }
+          return Container(
+            constraints: const BoxConstraints(maxHeight: 26, maxWidth: 181),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(13),
+              color: (theme.color.isDark
+                  ? theme.color.neutralColor1
+                  : theme.color.neutralColor98),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.keyboard_arrow_down,
+                  size: 16,
+                  color: (theme.color.isDark
+                      ? theme.color.primaryColor6
+                      : theme.color.primaryColor5),
+                ),
+                Flexible(
+                  fit: FlexFit.loose,
+                  child: Text(
+                    '$unreadCount 条新消息',
+                    style: TextStyle(
+                      height: 1.2,
+                      fontWeight: theme.font.labelMedium.fontWeight,
+                      fontSize: theme.font.labelMedium.fontSize,
+                      color: (theme.color.isDark
+                          ? theme.color.primaryColor6
+                          : theme.color.primaryColor5),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
   }
 
   @override
@@ -115,7 +189,11 @@ class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView>
 
     setState(() {
       this.messages.addAll(localMsgs);
-      moveToBottom();
+      if (canMoveToBottom.value) {
+        moveToBottom();
+      } else {
+        unreadCount += localMsgs.length;
+      }
     });
   }
 
@@ -143,6 +221,8 @@ class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView>
       }
       setState(() {
         messages.add(msg);
+        canMoveToBottom.value = true;
+        unreadCount = 0;
         moveToBottom();
       });
     }

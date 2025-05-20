@@ -13,3 +13,4 @@ export 'src/models/chat_room_uikit_gift.dart';
 export 'src/views/chatroom_gifts_view.dart';
 export 'src/views/chatroom_members_view.dart';
 export 'src/utils/chatroom_show_bottom_sheet.dart';
+export 'src/widgets/chatroom_message_list_item.dart';
