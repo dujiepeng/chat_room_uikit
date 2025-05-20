@@ -13,14 +13,11 @@ dependencies:
 
   chat_uikit_theme: ^1.0.4
 
-  # im_flutter_sdk: 4.13.0
-  # chat_sdk_service:
-  #   git:
-  #     url: https://github.com/dujiepeng/chat_sdk_service.git
-  #     ref: main
 
   chat_sdk_service:
-    path: ../chat_sdk_service
+    git:
+      url: https://github.com/dujiepeng/chat_sdk_service.git
+      ref: 5c6f7bb
 
   chat_uikit_provider:
     git:
