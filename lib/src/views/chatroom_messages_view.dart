@@ -22,12 +22,7 @@ class ChatRoomMessagesView extends StatefulWidget {
 }
 
 class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView>
-    with
-        RoomObserver,
-        ChatObserver,
-        MessageObserver,
-        ChatUIKitThemeMixin,
-        MessageObserver {
+    with RoomObserver, ChatObserver, MessageObserver, ChatUIKitThemeMixin {
   final scrollController = ScrollController();
   final List<Message> messages = [];
 
@@ -96,8 +91,8 @@ class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView>
 
     setState(() {
       this.messages.addAll(localMsgs);
+      moveToBottom();
     });
-    moveToBottom();
   }
 
   @override
@@ -117,14 +112,12 @@ class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView>
 
   @override
   void onMessageSendSuccess(String msgId, Message msg) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (msg.conversationId == widget.roomId && !msg.isBroadcast) {
+    if (msg.conversationId == widget.roomId && !msg.isBroadcast) {
+      setState(() {
         messages.add(msg);
-        setState(() {
-          moveToBottom();
-        });
-      }
-    });
+        moveToBottom();
+      });
+    }
   }
 
   void moveToBottom() {
