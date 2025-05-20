@@ -20,7 +20,7 @@ class ChatRoomUIKitSettings {
   static String? defaultIdentify;
 
 // Whether identities are displayed on the participant list.
-  static bool enableParticipantItemIdentify = false;
+  static bool enableMessageViewIdentify = true;
 
   /// Default gift icon
   static String? defaultGiftIcon;

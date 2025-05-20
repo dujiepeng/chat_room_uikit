@@ -567,7 +567,7 @@ class _ChatRoomUIKitMemberListTitleState
       children: [
         () {
           if (widget.profile.identify?.isNotEmpty == true &&
-              ChatRoomUIKitSettings.enableParticipantItemIdentify) {
+              ChatRoomUIKitSettings.enableMessageViewIdentify) {
             return Container(
               margin: const EdgeInsets.only(right: 14.7),
               width: 21.67,

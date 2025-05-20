@@ -12,3 +12,4 @@ export 'src/utils/message_extension.dart';
 export 'src/models/chat_room_uikit_gift.dart';
 export 'src/views/chatroom_gifts_view.dart';
 export 'src/views/chatroom_members_view.dart';
+export 'src/utils/chatroom_show_bottom_sheet.dart';
