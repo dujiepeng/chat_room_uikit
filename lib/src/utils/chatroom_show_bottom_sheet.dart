@@ -14,11 +14,11 @@ Future<ChatRoomGift?> chatroomShowGiftsView(
         topRight: Radius.circular(16.0),
       ),
     ),
-    builder: (context) {
+    builder: (ctx) {
       return ChatRoomGiftsView(
         giftControllers: giftControllers,
         onSendTap: (gift) {
-          Navigator.of(context).pop(gift);
+          Navigator.of(ctx).pop(gift);
         },
       );
     },

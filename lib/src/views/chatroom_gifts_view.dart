@@ -83,7 +83,6 @@ class _ChatRoomGiftsViewState extends State<ChatRoomGiftsView>
                       giftEntities: e.gifts,
                       onSendTap: (gift) {
                         widget.onSendTap?.call(gift);
-                        Navigator.maybeOf(context)?.pop();
                       },
                     ),
                   )
