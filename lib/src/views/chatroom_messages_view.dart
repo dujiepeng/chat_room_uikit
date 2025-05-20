@@ -1,5 +1,7 @@
 import 'package:chat_sdk_service/chat_sdk_service.dart';
+import 'package:chat_uikit_provider/chat_uikit_provider.dart';
 import 'package:chat_uikit_theme/chat_uikit_theme.dart';
+import 'package:chatroom_uikit/chatroom_uikit.dart';
 import 'package:chatroom_uikit/src/chatroom_uikit_service/chatroom_uikit_service.dart';
 import 'package:chatroom_uikit/src/widgets/chatroom_message_list_item.dart';
 import 'package:flutter/material.dart';
@@ -23,20 +25,42 @@ class ChatRoomMessagesView extends StatefulWidget {
 }
 
 class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView>
-    with RoomObserver, ChatObserver, MessageObserver, ChatUIKitThemeMixin {
+    with
+        RoomObserver,
+        ChatObserver,
+        MessageObserver,
+        ChatUIKitProviderObserver,
+        ChatUIKitThemeMixin {
   final scrollController = ScrollController();
   final List<Message> messages = [];
+
+  final Map<String, ChatUIKitProfile> profileCache = {};
 
   @override
   void initState() {
     super.initState();
     ChatRoomUIKit.instance.addObserver(this);
+    ChatUIKitProvider.instance.addObserver(this);
   }
 
   @override
   void dispose() {
     ChatRoomUIKit.instance.removeObserver(this);
+    ChatUIKitProvider.instance.removeObserver(this);
     super.dispose();
+  }
+
+  @override
+  void onProfilesUpdate(Map<String, ChatUIKitProfile> map, [String? belongId]) {
+    if (belongId == widget.roomId) {
+      if (ChatRoomUIKit.instance.currentUserId != null) {
+        final profile = map[ChatRoomUIKit.instance.currentUserId!];
+        if (profile != null && profile.type == ChatUIKitProfileType.contact) {
+          profileCache[profile.id] = profile;
+          setState(() {});
+        }
+      }
+    }
   }
 
   @override
@@ -49,19 +73,23 @@ class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView>
       itemBuilder: (context, index) {
         final msg = messages[index];
         return InkWell(
-            key: ValueKey(msg.msgId),
-            onLongPress: widget.onLongPress != null
-                ? () {
-                    widget.onLongPress?.call(context, msg);
-                  }
-                : null,
-            onTap: widget.onTap != null
-                ? () {
-                    widget.onTap?.call(context, msg);
-                  }
-                : null,
-            child: widget.itemBuilder?.call(msg) ??
-                ChatMessageListItemManager.getMessageListItem(msg));
+          key: ValueKey(msg.msgId),
+          onLongPress: widget.onLongPress != null
+              ? () {
+                  widget.onLongPress?.call(context, msg);
+                }
+              : null,
+          onTap: widget.onTap != null
+              ? () {
+                  widget.onTap?.call(context, msg);
+                }
+              : null,
+          child: widget.itemBuilder?.call(msg) ??
+              ChatMessageListItemManager.getMessageListItem(
+                msg,
+                profileCache[msg.from!],
+              ),
+        );
       },
       findChildIndexCallback: (key) {
         final index = messages.indexWhere((element) {
@@ -109,6 +137,10 @@ class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView>
   @override
   void onMessageSendSuccess(String msgId, Message msg) {
     if (msg.conversationId == widget.roomId && !msg.isBroadcast) {
+      final profile = msg.getUserInfo();
+      if (profile != null && profile.type == ChatUIKitProfileType.contact) {
+        profileCache[profile.id] = profile;
+      }
       setState(() {
         messages.add(msg);
         moveToBottom();

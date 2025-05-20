@@ -21,12 +21,18 @@ class _RoomPageState extends State<RoomPage> {
   @override
   void initState() {
     super.initState();
-    setup();
     analysisGiftList();
+    setup();
+  }
+
+  void setup() async {
+    // 先获取自己的信息，之后再加入聊天室
+    await setupMyInfo();
+    joinChatRoom();
   }
 
   // 加入聊天室
-  void setup() {
+  void joinChatRoom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ChatRoomUIKit.instance.joinChatRoom(roomId: roomId).then((_) {
         debugPrint('join chat room');
@@ -55,6 +61,24 @@ class _RoomPageState extends State<RoomPage> {
     }
   }
 
+  // 设置自己在聊天室中的信息
+  Future<void> setupMyInfo() async {
+    ChatUIKitProfile profile = ChatRoomUserInfo.createUserProfile(
+      userId: ChatRoomUIKit.instance.currentUserId!,
+      nickname: '在 ${widget.room.name ?? roomId} 中的昵称',
+    );
+    ChatUIKitProvider.instance.addProfiles([profile], roomId);
+  }
+
+  // 设置自己在聊天室中的信息
+  Future<void> updateMyInfo() async {
+    ChatUIKitProfile profile = ChatRoomUserInfo.createUserProfile(
+      userId: ChatRoomUIKit.instance.currentUserId!,
+      nickname: '更新昵称',
+    );
+    ChatUIKitProvider.instance.addProfiles([profile], roomId);
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget content = Scaffold(
@@ -62,27 +86,8 @@ class _RoomPageState extends State<RoomPage> {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {
-              ChatRoomUIKit.instance.sendMessage(
-                message: ChatRoomMessage.giftMessage(
-                  roomId,
-                  ChatRoomGift(
-                    giftId: 'giftId',
-                  ),
-                ),
-              );
-            },
-            icon: const Icon(Icons.message_outlined),
-          ),
-          IconButton(
-            onPressed: () {
-              ChatRoomUIKit.instance.sendMessage(
-                  message: ChatRoomMessage.roomMessage(
-                roomId,
-                'test',
-              ));
-            },
-            icon: const Icon(Icons.message),
+            onPressed: updateMyInfo,
+            icon: const Icon(Icons.refresh),
           ),
           IconButton(
             onPressed: () {

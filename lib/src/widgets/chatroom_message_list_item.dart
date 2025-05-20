@@ -13,20 +13,21 @@ import 'package:chat_sdk_service/chat_sdk_service.dart';
 import 'package:chatroom_uikit/src/utils/chat_uikit_profile_extension.dart';
 
 class ChatMessageListItemManager {
-  static Widget getMessageListItem(Message message) {
+  static Widget getMessageListItem(Message message, ChatUIKitProfile? user) {
     if (message.isJoinNotify) {
-      return ChatRoomUserJoinListItem(message);
+      return ChatRoomUserJoinListItem(message, user);
     } else if (message.isGift) {
-      return ChatRoomGiftListItem(message);
+      return ChatRoomGiftListItem(message, user);
     } else {
-      return ChatRoomTextMessageListItem(message);
+      return ChatRoomTextMessageListItem(message, user);
     }
   }
 }
 
 class ChatRoomMessageListItem extends StatefulWidget {
-  const ChatRoomMessageListItem(this.msg, {this.child, super.key});
+  const ChatRoomMessageListItem(this.msg, {this.child, this.user, super.key});
   final Message msg;
+  final ChatUIKitProfile? user;
   final TextSpan? child;
   @override
   State<ChatRoomMessageListItem> createState() =>
@@ -43,7 +44,7 @@ class _ChatRoomMessageListItemState extends State<ChatRoomMessageListItem>
       list.add(TextSpan(text: TimeTool.timeStrByMs(widget.msg.serverTime)));
     }
 
-    ChatUIKitProfile? userProfile = widget.msg.getUserInfo();
+    ChatUIKitProfile? userProfile = widget.user ?? widget.msg.getUserInfo();
     if (ChatRoomUIKitSettings.enableMsgListIdentify) {
       if (userProfile?.identify?.isNotEmpty == true) {
         list.add(WidgetSpan(
@@ -141,8 +142,9 @@ class _ChatRoomMessageListItemState extends State<ChatRoomMessageListItem>
 }
 
 class ChatRoomUserJoinListItem extends StatefulWidget {
-  const ChatRoomUserJoinListItem(this.msg, {super.key});
+  const ChatRoomUserJoinListItem(this.msg, this.user, {super.key});
   final Message msg;
+  final ChatUIKitProfile? user;
   @override
   State<ChatRoomUserJoinListItem> createState() =>
       _ChatRoomUserJoinListItemState();
@@ -154,6 +156,7 @@ class _ChatRoomUserJoinListItemState extends State<ChatRoomUserJoinListItem>
   Widget themeBuilder(BuildContext context, ChatUIKitTheme theme) {
     return ChatRoomMessageListItem(
       widget.msg,
+      user: widget.user,
       // TODO: 国际化
       child: TextSpan(
           text: " 加入聊天室",
@@ -167,8 +170,9 @@ class _ChatRoomUserJoinListItemState extends State<ChatRoomUserJoinListItem>
 }
 
 class ChatRoomGiftListItem extends StatefulWidget {
-  const ChatRoomGiftListItem(this.msg, {super.key});
+  const ChatRoomGiftListItem(this.msg, this.user, {super.key});
   final Message msg;
+  final ChatUIKitProfile? user;
   @override
   State<ChatRoomGiftListItem> createState() => _ChatRoomGiftListItemState();
 }
@@ -182,6 +186,7 @@ class _ChatRoomGiftListItemState extends State<ChatRoomGiftListItem>
 
     return ChatRoomMessageListItem(
       widget.msg,
+      user: widget.user,
       // TODO: 国际化
       child: TextSpan(
         children: [
@@ -217,8 +222,9 @@ class _ChatRoomGiftListItemState extends State<ChatRoomGiftListItem>
 }
 
 class ChatRoomTextMessageListItem extends StatefulWidget {
-  const ChatRoomTextMessageListItem(this.msg, {super.key});
+  const ChatRoomTextMessageListItem(this.msg, this.user, {super.key});
   final Message msg;
+  final ChatUIKitProfile? user;
   @override
   State<ChatRoomTextMessageListItem> createState() =>
       _ChatRoomTextMessageListItemState();
@@ -300,6 +306,7 @@ class _ChatRoomTextMessageListItemState
 
     return ChatRoomMessageListItem(
       widget.msg,
+      user: widget.user,
       child: TextSpan(
         children: [
           const WidgetSpan(child: Padding(padding: EdgeInsets.only(left: 4))),
