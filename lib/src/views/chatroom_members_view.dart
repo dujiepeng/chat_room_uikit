@@ -381,6 +381,8 @@ class _ChatRoomMemberListViewState extends State<ChatRoomMemberListView>
   }
 
   Widget searchBar() {
+    // TODO: 搜索
+    return const SizedBox();
     Widget content;
     final theme = ChatUIKitTheme.instance;
     content = ValueListenableBuilder(

@@ -12,23 +12,29 @@ packages:
   chat_sdk_context:
     dependency: transitive
     description:
-      path: "../../chat_sdk_context"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: ec6c0ec030e2b6b827bd0752261c40787d3e1cbd
+      url: "https://github.com/dujiepeng/chat_uikit_context.git"
+    source: git
     version: "0.0.1"
   chat_sdk_service:
     dependency: transitive
     description:
-      path: "../../chat_sdk_service"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: "160f23ce531058bd78c56dbbeebcd1c157ccee1b"
+      url: "https://github.com/dujiepeng/chat_sdk_service.git"
+    source: git
     version: "4.13.0"
   chat_uikit_provider:
     dependency: transitive
     description:
-      path: "../../chat_uikit_provider"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: "9b9530574d02c76a0404e4aa0408c09ba5fb76e8"
+      url: "https://github.com/dujiepeng/chat_uikit_provider.git"
+    source: git
     version: "0.0.1"
   chat_uikit_theme:
     dependency: transitive
