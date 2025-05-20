@@ -1,5 +1,5 @@
 import 'package:chatroom_uikit/chatroom_uikit.dart';
-import 'package:chatroom_uikit_example/rooms_list_page.dart';
+import 'package:chatroom_uikit_example/rooms_list_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {

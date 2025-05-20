@@ -307,52 +307,31 @@ class GiftItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              flex: 0,
-              child: Text(
-                userInfo?.nickname ?? userInfo?.id ?? fromUserId,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontWeight: theme.font.labelSmall.fontWeight,
-                  fontSize: theme.font.labelSmall.fontSize,
-                  color: Colors.white,
-                ),
-              ),
-            )
-          ],
+        Text(
+          userInfo?.nickname ?? userInfo?.id ?? fromUserId,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontWeight: theme.font.labelSmall.fontWeight,
+            fontSize: theme.font.labelSmall.fontSize,
+            color: Colors.white,
+          ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              flex: 0,
-              child: Text(
-                // TODO 国际化
-                gift.giftName ?? '礼物',
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontWeight: theme.font.bodyExtraSmall.fontWeight,
-                  fontSize: theme.font.bodyExtraSmall.fontSize,
-                  color: Colors.white,
-                ),
-              ),
-            )
-          ],
+        Container(
+          child: Text(
+            // TODO 国际化
+            gift.giftName ?? '礼物',
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontWeight: theme.font.bodyExtraSmall.fontWeight,
+              fontSize: theme.font.bodyExtraSmall.fontSize,
+              color: Colors.white,
+            ),
+          ),
         ),
       ],
     );
 
-    list.add(
-      Expanded(
-        flex: 0,
-        child: content,
-      ),
-    );
+    list.add(content);
 
     // 礼物图片
     list.add(ChatRoomImageLoader.networkImage(
@@ -402,7 +381,7 @@ class GiftItem extends StatelessWidget {
     );
 
     content = Padding(
-      padding: const EdgeInsets.only(right: 4),
+      padding: const EdgeInsets.only(right: 10),
       child: content,
     );
 

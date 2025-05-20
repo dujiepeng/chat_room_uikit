@@ -14,6 +14,7 @@ class ChatRoomMessagesView extends StatefulWidget {
   });
 
   final String roomId;
+
   final Widget Function(Message msg)? itemBuilder;
   final void Function(BuildContext content, Message msg)? onTap;
   final void Function(BuildContext content, Message msg)? onLongPress;
@@ -72,11 +73,6 @@ class _ChatRoomMessagesViewState extends State<ChatRoomMessagesView>
       separatorBuilder: (context, index) {
         return const SizedBox(height: 4);
       },
-    );
-
-    content = Container(
-      color: Colors.black.withValues(alpha: 0.3),
-      child: content,
     );
 
     return content;

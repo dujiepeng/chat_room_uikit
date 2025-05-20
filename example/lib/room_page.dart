@@ -6,15 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class RoomPage extends StatefulWidget {
-  const RoomPage(this.roomId, {super.key});
+  const RoomPage(this.room, {super.key});
 
-  final String roomId;
+  final ChatRoom room;
   @override
   State<RoomPage> createState() => _RoomPageState();
 }
 
 class _RoomPageState extends State<RoomPage> {
   ChatRoomInputBarController inputBarController = ChatRoomInputBarController();
+  String get roomId => widget.room.roomId;
   @override
   void initState() {
     super.initState();
@@ -23,7 +24,7 @@ class _RoomPageState extends State<RoomPage> {
 
   void setup() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ChatRoomUIKit.instance.joinChatRoom(roomId: widget.roomId).then((_) {
+      ChatRoomUIKit.instance.joinChatRoom(roomId: roomId).then((_) {
         debugPrint('join chat room');
       }).catchError((e) {
         debugPrint('join chat room error: $e');
@@ -41,7 +42,7 @@ class _RoomPageState extends State<RoomPage> {
             onPressed: () {
               ChatRoomUIKit.instance.sendMessage(
                 message: ChatRoomMessage.giftMessage(
-                  widget.roomId,
+                  roomId,
                   ChatRoomGift(
                     giftId: 'giftId',
                   ),
@@ -54,7 +55,7 @@ class _RoomPageState extends State<RoomPage> {
             onPressed: () {
               ChatRoomUIKit.instance.sendMessage(
                   message: ChatRoomMessage.roomMessage(
-                widget.roomId,
+                roomId,
                 'test',
               ));
             },
@@ -74,8 +75,8 @@ class _RoomPageState extends State<RoomPage> {
                 ),
                 builder: (ctx) {
                   return ChatRoomUIKitMembersView(
-                    roomId: widget.roomId,
-                    ownerId: 'du001',
+                    roomId: roomId,
+                    ownerId: widget.room.owner!,
                     controllers: [
                       ChatRoomUIKitMembersController(
                         '成员列表',
@@ -118,7 +119,7 @@ class _RoomPageState extends State<RoomPage> {
             height: 84,
             bottom: 300,
             child: ChatRoomShowGiftView(
-              roomId: widget.roomId,
+              roomId: roomId,
             ),
           ),
           Positioned(
@@ -126,7 +127,7 @@ class _RoomPageState extends State<RoomPage> {
             right: 78,
             height: 204,
             bottom: 90,
-            child: ChatRoomMessagesView(roomId: widget.roomId),
+            child: ChatRoomMessagesView(roomId: roomId),
           ),
           Positioned(
             top: 0,
@@ -141,7 +142,7 @@ class _RoomPageState extends State<RoomPage> {
                     return;
                   }
                   ChatRoomUIKit.instance.sendMessage(
-                    message: ChatRoomMessage.roomMessage(widget.roomId, msg),
+                    message: ChatRoomMessage.roomMessage(roomId, msg),
                   );
                 },
                 actions: [
@@ -184,7 +185,7 @@ class _RoomPageState extends State<RoomPage> {
                                   onSendTap: (gift) {
                                     ChatRoomUIKit.instance.sendMessage(
                                       message: ChatRoomMessage.giftMessage(
-                                        widget.roomId,
+                                        roomId,
                                         gift,
                                       ),
                                     );
@@ -213,7 +214,7 @@ class _RoomPageState extends State<RoomPage> {
 
     content = PopScope(
       onPopInvokedWithResult: (didPop, result) async {
-        ChatRoomUIKit.instance.leaveChatRoom(widget.roomId).then((_) {
+        ChatRoomUIKit.instance.leaveChatRoom(roomId).then((_) {
           debugPrint('leave chat room');
         }).catchError((e) {
           debugPrint('leave chat room error: $e');
